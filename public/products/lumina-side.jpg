@@ -1,0 +1,7 @@
+<svg width="640" height="640" viewBox="0 0 640 640" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="640" rx="40" fill="#0f1016"/>
+  <rect x="240" y="140" width="160" height="360" rx="30" fill="#0a0a0f" stroke="#c2a965" stroke-width="6"/>
+  <rect x="255" y="200" width="130" height="60" rx="14" fill="#c2a965" opacity="0.5"/>
+  <rect x="275" y="300" width="90" height="140" rx="18" fill="#11131c" stroke="#c2a965" stroke-width="3"/>
+  <text x="50%" y="75%" text-anchor="middle" fill="#c2a965" font-family="Inter, sans-serif" font-size="20">Frasco real - lateral</text>
+</svg>
