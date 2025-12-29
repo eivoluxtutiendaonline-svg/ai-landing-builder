@@ -42,13 +42,29 @@ export default function LandingPreview({ landing }: { landing: Landing }) {
             </div>
             {section.image && (
               <div className="h-40 w-full max-w-xs overflow-hidden rounded-xl border border-night-700 bg-night-900/60">
-                <div className="flex h-full items-center justify-center text-xs text-slate-400">
-                  Imagen IA (mismo frasco)
+                <div className="flex h-full items-center justify-center text-[11px] text-slate-400 px-2 text-center">
+                  Imagen real usada en esta sección — el frasco se mantiene idéntico
                 </div>
-                <img src={section.image} alt={section.title} className="h-full w-full object-cover opacity-70" />
+                <img src={section.image} alt={section.title} className="h-full w-full object-cover opacity-80" />
               </div>
             )}
           </div>
+          {(section.visualStyle || section.visualContext) && (
+            <div className="mt-3 grid gap-2 rounded-lg border border-night-700 bg-night-800/80 p-3 text-xs text-slate-300 md:grid-cols-2">
+              {section.visualStyle && (
+                <div>
+                  <p className="font-semibold text-brand-200">Estilo visual</p>
+                  <p className="text-slate-300">{section.visualStyle}</p>
+                </div>
+              )}
+              {section.visualContext && (
+                <div>
+                  <p className="font-semibold text-brand-200">Contexto</p>
+                  <p className="text-slate-300">{section.visualContext}</p>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       ))}
     </div>

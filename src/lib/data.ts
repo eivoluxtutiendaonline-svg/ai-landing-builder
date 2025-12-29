@@ -55,6 +55,8 @@ function sectionImage(images: string[], fallbackIndex = 0) {
 
 function buildLanding(productId: string, input: BuildLandingInput): Landing {
   const now = new Date().toISOString();
+  const visualStyle =
+    "Realismo fotográfico premium, fondo negro con acentos dorados, iluminación dramática, producto intacto y centrado";
   const sequence: { type: LandingSectionType; title: string; subtitle?: string; bullets?: string[] }[] =
     [
       {
@@ -129,6 +131,28 @@ function buildLanding(productId: string, input: BuildLandingInput): Landing {
     bullets: item.bullets,
     body: item.type === "Hero" ? `${input.controls.angle}. ${input.controls.details}` : undefined,
     image: sectionImage(input.images, Math.min(index, input.images.length - 1)),
+    visualStyle,
+    visualContext: (() => {
+      const base = "Producto idéntico, sin cambios, solo varía fondo/escena.";
+      switch (item.type) {
+        case "Hero":
+          return `${base} Producto protagonista sobre fondo negro con halo dorado y luz cenital dramática, CTA visible.`;
+        case "Problemas":
+          return `${base} Personas reales con expresiones de frustración, fondo oscuro con detalles dorados sutiles.`;
+        case "Beneficios":
+          return `${base} Before/after insinuado con energía, enfoque y fuerza; esquema de luz dorada de alto contraste.`;
+        case "Ingredientes":
+          return `${base} Producto al centro, flechas y llamados a ingredientes, etiquetas doradas minimalistas.`;
+        case "Testimonios":
+          return `${base} Clientes lifestyle reales, reseñas claras; fondo oscuro elegante.`;
+        case "Autoridad":
+          return `${base} Sellos de garantía, íconos de envío y pago seguro en dorado sobre negro.`;
+        case "Oferta":
+          return `${base} Producto destacado con bonus y urgencia; iluminación teatral, CTA fuerte.`;
+        default:
+          return base;
+      }
+    })(),
     ctaLabel: item.type === "Oferta" || item.type === "Hero" ? "Comprar ahora" : undefined,
   }));
 

@@ -23,6 +23,8 @@ export type LandingSection = {
   body?: string;
   image?: string;
   ctaLabel?: string;
+  visualContext?: string;
+  visualStyle?: string;
 };
 
 export type Landing = {
