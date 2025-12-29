@@ -1,111 +1,167 @@
 import { randomUUID } from "crypto";
-import type { Product, Section, SectionType, Template } from "@/lib/types";
-
-const templates: Template[] = [
-  {
-    id: "tpl-hero-impacto",
-    name: "Hero impacto visual",
-    sectionType: "Hero",
-    structure: {
-      layout: "two-column",
-      emphasis: true,
-      theme: "gradient",
-      fields: ["headline", "subheadline", "bullets", "ctaLabel", "imageUrl"],
-    },
-    editableFields: [
-      {
-        key: "headline",
-        label: "Titular principal",
-        type: "text",
-        helperText: "Mensaje directo con la propuesta de valor",
-      },
-      {
-        key: "subheadline",
-        label: "Subtítulo",
-        type: "textarea",
-        helperText: "Refuerza el beneficio principal",
-      },
-      {
-        key: "bullets",
-        label: "Beneficios clave",
-        type: "list",
-        helperText: "3-5 bullets sobre lo que hace al producto especial",
-      },
-      {
-        key: "ctaLabel",
-        label: "Texto CTA",
-        type: "cta",
-      },
-      {
-        key: "imageUrl",
-        label: "Imagen destacada",
-        type: "image",
-      },
-    ],
-    defaultContent: {
-      headline: "Lanza tu landing en minutos",
-      subheadline: "Plantillas optimizadas para ecommerce que convierten desde el primer clic",
-      bullets: [
-        "Estructuras probadas para tiendas DTC",
-        "Componentes editables sin necesidad de código",
-        "Versionado rápido para campañas y creativos",
-      ],
-      ctaLabel: "Crear mi landing",
-      imageUrl: "/placeholder-hero.svg",
-    },
-  },
-  {
-    id: "tpl-oferta-basica",
-    name: "Oferta directa",
-    sectionType: "Oferta",
-    structure: {
-      layout: "single-column",
-      emphasis: false,
-      fields: ["headline", "ctaLabel"],
-    },
-    editableFields: [
-      { key: "headline", label: "Oferta", type: "text" },
-      { key: "ctaLabel", label: "CTA", type: "cta" },
-    ],
-    defaultContent: {
-      headline: "Llévatelo hoy con 30% OFF",
-      ctaLabel: "Comprar ahora",
-    },
-  },
-];
+import type {
+  CreativeControls,
+  Landing,
+  LandingSection,
+  LandingSectionType,
+  Product,
+} from "@/lib/types";
 
 const products: Product[] = [
   {
     id: "prd-demo-1",
-    name: "Pack Detox Vital",
-    description: "Suplemento natural para energía y bienestar diario.",
-    sections: [
-      {
-        id: "sec-demo-hero",
-        templateId: "tpl-hero-impacto",
-        content: {
-          headline: "Energía limpia para todo el día",
-          subheadline:
-            "Comienza tu mañana con ingredientes naturales que impulsan tu productividad y bienestar.",
-          bullets: [
-            "Fórmula con adaptógenos y vitaminas esenciales",
-            "Sin azúcares añadidos ni crash energético",
-            "Envío rápido y seguimiento en 24h",
-          ],
-          ctaLabel: "Probar el pack",
-          imageUrl: "/placeholder-hero.svg",
-        },
-      },
+    name: "Serum Lumina Gold",
+    description: "Serum facial iluminador premium con vitamina C estabilizada y péptidos.",
+    images: [
+      "/products/lumina-front.jpg",
+      "/products/lumina-side.jpg",
+      "/products/lumina-closeup.jpg",
     ],
+    creativeControls: {
+      details: "Serum dorado, sensación de lujo clínico, envase negro con tipografía oro.",
+      angle: "Skinimalism premium, resultados visibles en 14 días.",
+      avatar: "Mujer profesional 30-45, cuida su piel, compra online marcas boutique.",
+      instructions: "Tono elegante, directo, evita claims médicos, resalta textura sedosa.",
+    },
+    landing: buildLanding("prd-demo-1", {
+      name: "Serum Lumina Gold",
+      description: "Serum facial iluminador premium con vitamina C estabilizada y péptidos.",
+      images: [
+        "/products/lumina-front.jpg",
+        "/products/lumina-side.jpg",
+        "/products/lumina-closeup.jpg",
+      ],
+      controls: {
+        details: "Serum dorado, sensación de lujo clínico, envase negro con tipografía oro.",
+        angle: "Skinimalism premium, resultados visibles en 14 días.",
+        avatar: "Mujer profesional 30-45, cuida su piel, compra online marcas boutique.",
+        instructions: "Tono elegante, directo, evita claims médicos, resalta textura sedosa.",
+      },
+    }),
+    createdAt: new Date().toISOString(),
   },
 ];
 
-export function getTemplates(): Template[] {
-  return templates;
+type BuildLandingInput = {
+  name: string;
+  description: string;
+  images: string[];
+  controls: CreativeControls;
+};
+
+function sectionImage(images: string[], fallbackIndex = 0) {
+  return images[fallbackIndex] ?? images[0] ?? "/placeholder-hero.svg";
 }
 
-export function getTemplatesByType(type: SectionType): Template[] {
-  return templates.filter((template) => template.sectionType === type);
+function buildLanding(productId: string, input: BuildLandingInput): Landing {
+  const now = new Date().toISOString();
+  const visualStyle =
+    "Realismo fotográfico premium, fondo negro con acentos dorados, iluminación dramática, producto intacto y centrado";
+  const sequence: { type: LandingSectionType; title: string; subtitle?: string; bullets?: string[] }[] =
+    [
+      {
+        type: "Hero",
+        title: `Transforma tu piel con ${input.name}`,
+        subtitle: input.description,
+        bullets: [
+          "Sensación inmediata de luminosidad",
+          "Textura ligera y absorción rápida",
+          "Ingredientes premium validados por laboratorio",
+        ],
+      },
+      {
+        type: "Problemas",
+        title: "Lo que tu cliente siente hoy",
+        bullets: [
+          "Piel cansada, opaca y sin vida",
+          "Rutinas complejas que no se sostienen",
+          "Desconfianza en promesas irreales",
+        ],
+      },
+      {
+        type: "Beneficios",
+        title: "Beneficios claros y tangibles",
+        bullets: [
+          "Brillo uniforme y tono equilibrado",
+          "Hidratación profunda sin sensación grasosa",
+          "Look profesional en menos pasos",
+        ],
+      },
+      {
+        type: "Ingredientes",
+        title: "Dentro del frasco, ciencia y lujo",
+        bullets: [
+          "Vitamina C estabilizada + péptidos biomiméticos",
+          "Extracto botánico antioxidante grado dermo",
+          "Base hipoalergénica, sin fragancias añadidas",
+        ],
+      },
+      {
+        type: "Testimonios",
+        title: "Testimonios realistas",
+        bullets: [
+          "“En dos semanas noté la piel más luminosa, sin sensación pegajosa.” — Valeria, 34",
+          "“Por fin un serum premium que cumple y se siente ligero.” — Andrea, 31",
+          "“Lo uso antes del maquillaje y mejora el acabado.” — Sofía, 29",
+        ],
+      },
+      {
+        type: "Autoridad",
+        title: "Autoridad y confianza",
+        subtitle: "Envío prioritario, pago seguro y garantía de satisfacción avalados por expertos.",
+        bullets: [
+          "Despacho rápido y trazable",
+          "Pasarela de pago certificada",
+          "Equipo humano acompañando post-compra",
+        ],
+      },
+      {
+        type: "Oferta",
+        title: "Oferta final",
+        subtitle: "Llévate Lumina Gold con envío prioritario y garantía de satisfacción 30 días.",
+        bullets: ["Entrega prioritaria", "Pago seguro", "Acompañamiento post-compra"],
+      },
+    ];
+
+  const sections: LandingSection[] = sequence.map((item, index) => ({
+    id: `sec-${randomUUID()}`,
+    type: item.type,
+    title: item.title,
+    subtitle: item.subtitle,
+    bullets: item.bullets,
+    body: item.type === "Hero" ? `${input.controls.angle}. ${input.controls.details}` : undefined,
+    image: sectionImage(input.images, Math.min(index, input.images.length - 1)),
+    visualStyle,
+    visualContext: (() => {
+      const base = "Producto idéntico, sin cambios, solo varía fondo/escena.";
+      switch (item.type) {
+        case "Hero":
+          return `${base} Producto protagonista sobre fondo negro con halo dorado y luz cenital dramática, CTA visible.`;
+        case "Problemas":
+          return `${base} Personas reales con expresiones de frustración, fondo oscuro con detalles dorados sutiles.`;
+        case "Beneficios":
+          return `${base} Before/after insinuado con energía, enfoque y fuerza; esquema de luz dorada de alto contraste.`;
+        case "Ingredientes":
+          return `${base} Producto al centro, flechas y llamados a ingredientes, etiquetas doradas minimalistas.`;
+        case "Testimonios":
+          return `${base} Clientes lifestyle reales, reseñas claras; fondo oscuro elegante.`;
+        case "Autoridad":
+          return `${base} Sellos de garantía, íconos de envío y pago seguro en dorado sobre negro.`;
+        case "Oferta":
+          return `${base} Producto destacado con bonus y urgencia; iluminación teatral, CTA fuerte.`;
+        default:
+          return base;
+      }
+    })(),
+    ctaLabel: item.type === "Oferta" || item.type === "Hero" ? "Comprar ahora" : undefined,
+  }));
+
+  return {
+    id: `lnd-${randomUUID()}`,
+    productId,
+    sections,
+    generatedAt: now,
+  };
 }
 
 export function getProducts(): Product[] {
@@ -121,30 +177,45 @@ export function addProduct(input: Pick<Product, "name" | "description">): Produc
     id: `prd-${randomUUID()}`,
     name: input.name,
     description: input.description,
-    sections: [],
+    images: [],
+    createdAt: new Date().toISOString(),
   };
 
   products.unshift(newProduct);
   return newProduct;
 }
 
-export function addSectionToProduct(
+export function generateLandingForProduct(
   productId: string,
-  templateId: string,
-  content: Record<string, string | string[]> | undefined,
-): Section | undefined {
+  payload: { images: string[]; controls: CreativeControls },
+): Landing | undefined {
   const product = getProductById(productId);
   if (!product) return undefined;
+  if (payload.images.length !== 3) return undefined;
 
-  const template = templates.find((tpl) => tpl.id === templateId);
-  if (!template) return undefined;
+  product.images = payload.images;
+  product.creativeControls = payload.controls;
+  const landing = buildLanding(productId, {
+    name: product.name,
+    description: product.description,
+    images: payload.images,
+    controls: payload.controls,
+  });
+  product.landing = landing;
+  return landing;
+}
 
-  const section: Section = {
-    id: `sec-${randomUUID()}`,
-    templateId,
-    content: content ?? template.defaultContent,
-  };
+export function updateLandingSection(
+  productId: string,
+  sectionId: string,
+  updates: Partial<LandingSection>,
+): Landing | undefined {
+  const product = getProductById(productId);
+  if (!product || !product.landing) return undefined;
 
-  product.sections.push(section);
-  return section;
+  product.landing.sections = product.landing.sections.map((section) =>
+    section.id === sectionId ? { ...section, ...updates } : section,
+  );
+
+  return product.landing;
 }

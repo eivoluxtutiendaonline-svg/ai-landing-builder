@@ -1,0 +1,7 @@
+<svg width="640" height="640" viewBox="0 0 640 640" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="640" rx="40" fill="#0f1016"/>
+  <circle cx="320" cy="320" r="180" fill="#0a0a0f" stroke="#c2a965" stroke-width="8"/>
+  <rect x="270" y="220" width="100" height="200" rx="24" fill="#11131c" stroke="#c2a965" stroke-width="3"/>
+  <rect x="285" y="250" width="70" height="60" rx="12" fill="#c2a965" opacity="0.55"/>
+  <text x="50%" y="80%" text-anchor="middle" fill="#c2a965" font-family="Inter, sans-serif" font-size="20">Frasco real - closeup</text>
+</svg>

@@ -1,38 +1,45 @@
-export type SectionType =
+export type CreativeControls = {
+  details: string;
+  angle: string;
+  avatar: string;
+  instructions: string;
+};
+
+export type LandingSectionType =
   | "Hero"
-  | "Oferta"
+  | "Problemas"
   | "Beneficios"
-  | "TablaComparativa"
+  | "Ingredientes"
   | "Testimonios"
-  | "PruebaAutoridad"
-  | "ModoUso"
-  | "Logistica";
+  | "Autoridad"
+  | "Oferta";
 
-export type TemplateField = {
-  key: string;
-  label: string;
-  type: "text" | "textarea" | "image" | "cta" | "list";
-  helperText?: string;
+export type LandingSection = {
+  id: string;
+  type: LandingSectionType;
+  title: string;
+  subtitle?: string;
+  bullets?: string[];
+  body?: string;
+  image?: string;
+  ctaLabel?: string;
+  visualContext?: string;
+  visualStyle?: string;
 };
 
-export type Template = {
+export type Landing = {
   id: string;
-  name: string;
-  sectionType: SectionType;
-  structure: Record<string, unknown>;
-  editableFields: TemplateField[];
-  defaultContent: Record<string, string | string[]>;
-};
-
-export type Section = {
-  id: string;
-  templateId: string;
-  content: Record<string, string | string[]>;
+  productId: string;
+  sections: LandingSection[];
+  generatedAt: string;
 };
 
 export type Product = {
   id: string;
   name: string;
   description: string;
-  sections: Section[];
+  images: string[];
+  creativeControls?: CreativeControls;
+  landing?: Landing;
+  createdAt: string;
 };
