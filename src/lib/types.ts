@@ -10,10 +10,9 @@ export type LandingSectionType =
   | "Problemas"
   | "Beneficios"
   | "Ingredientes"
-  | "Autoridad"
   | "Testimonios"
-  | "Oferta"
-  | "CTA";
+  | "Autoridad"
+  | "Oferta";
 
 export type LandingSection = {
   id: string;

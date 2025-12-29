@@ -2,9 +2,15 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import type { CreativeControls } from "@/lib/types";
+import type { CreativeControls, Landing } from "@/lib/types";
 
-export default function GenerateLandingForm({ productId }: { productId: string }) {
+export default function GenerateLandingForm({
+  productId,
+  onGenerated,
+}: {
+  productId: string;
+  onGenerated?: (landing: Landing) => void;
+}) {
   const router = useRouter();
   const [images, setImages] = useState<string[]>(["", "", ""]);
   const [controls, setControls] = useState<CreativeControls>({
@@ -51,6 +57,10 @@ export default function GenerateLandingForm({ productId }: { productId: string }
       return;
     }
 
+    const data = await res.json();
+    if (data.landing && onGenerated) {
+      onGenerated(data.landing);
+    }
     setSuccess("Landing generada con IA");
     setLoading(false);
     router.refresh();
@@ -85,6 +95,12 @@ export default function GenerateLandingForm({ productId }: { productId: string }
             <span className="mt-2 block text-[11px] text-slate-500">
               Usa la misma referencia de frasco: no inventamos nuevos envases.
             </span>
+            {image && (
+              <div className="mt-3 overflow-hidden rounded-lg border border-night-800 bg-night-800/80">
+                <img src={image} alt={`Imagen real ${index + 1}`} className="h-32 w-full object-cover opacity-80" />
+                <div className="px-2 py-1 text-[11px] text-slate-400">Preview — el frasco debe ser idéntico</div>
+              </div>
+            )}
           </label>
         ))}
       </div>

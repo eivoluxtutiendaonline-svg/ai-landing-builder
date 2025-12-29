@@ -95,11 +95,6 @@ function buildLanding(productId: string, input: BuildLandingInput): Landing {
         ],
       },
       {
-        type: "Autoridad",
-        title: "Prueba de autoridad",
-        subtitle: "Recomendado por especialistas en cuidado de la piel y creadoras de belleza.",
-      },
-      {
         type: "Testimonios",
         title: "Testimonios realistas",
         bullets: [
@@ -109,14 +104,19 @@ function buildLanding(productId: string, input: BuildLandingInput): Landing {
         ],
       },
       {
-        type: "Oferta",
-        title: "Oferta principal",
-        subtitle: "Llévate Lumina Gold con envío prioritario y garantía de satisfacción 30 días.",
+        type: "Autoridad",
+        title: "Autoridad y confianza",
+        subtitle: "Envío prioritario, pago seguro y garantía de satisfacción avalados por expertos.",
+        bullets: [
+          "Despacho rápido y trazable",
+          "Pasarela de pago certificada",
+          "Equipo humano acompañando post-compra",
+        ],
       },
       {
-        type: "CTA",
-        title: "Listo para brillar",
-        subtitle: "Garantía de confianza, entrega rápida y soporte humano.",
+        type: "Oferta",
+        title: "Oferta final",
+        subtitle: "Llévate Lumina Gold con envío prioritario y garantía de satisfacción 30 días.",
         bullets: ["Entrega prioritaria", "Pago seguro", "Acompañamiento post-compra"],
       },
     ];
@@ -127,12 +127,9 @@ function buildLanding(productId: string, input: BuildLandingInput): Landing {
     title: item.title,
     subtitle: item.subtitle,
     bullets: item.bullets,
-    body:
-      item.type === "Hero"
-        ? `${input.controls.angle}. ${input.controls.details}`
-        : undefined,
+    body: item.type === "Hero" ? `${input.controls.angle}. ${input.controls.details}` : undefined,
     image: sectionImage(input.images, Math.min(index, input.images.length - 1)),
-    ctaLabel: item.type === "CTA" || item.type === "Hero" ? "Comprar ahora" : undefined,
+    ctaLabel: item.type === "Oferta" || item.type === "Hero" ? "Comprar ahora" : undefined,
   }));
 
   return {
@@ -182,4 +179,19 @@ export function generateLandingForProduct(
   });
   product.landing = landing;
   return landing;
+}
+
+export function updateLandingSection(
+  productId: string,
+  sectionId: string,
+  updates: Partial<LandingSection>,
+): Landing | undefined {
+  const product = getProductById(productId);
+  if (!product || !product.landing) return undefined;
+
+  product.landing.sections = product.landing.sections.map((section) =>
+    section.id === sectionId ? { ...section, ...updates } : section,
+  );
+
+  return product.landing;
 }

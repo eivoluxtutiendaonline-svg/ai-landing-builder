@@ -8,7 +8,6 @@ const sectionStyles: Record<string, string> = {
   Autoridad: "bg-night-900 border border-night-700",
   Testimonios: "bg-night-900 border border-night-700",
   Oferta: "bg-night-800 border border-brand-500/20",
-  CTA: "bg-night-800 border border-brand-500/30",
 };
 
 export default function LandingPreview({ landing }: { landing: Landing }) {
